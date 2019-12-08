@@ -16,5 +16,5 @@ phases:
       - echo Build completed on `date`
 artifacts:
   files:
-    - target/my-app-1.0-SNAPSHOT.jar
+    - target/calendarapp-0.0.1.jar
   discard-paths: yes
