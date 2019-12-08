@@ -30,3 +30,8 @@ build/
 ### VS Code ###
 .vscode/
 /.mvn/wrapper/MavenWrapperDownloader.java
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
