@@ -1,4 +1,4 @@
-package com.server.calendarapp.model;
+package com.server.calendarapp.payload;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,6 +11,8 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class JWTResponse implements Serializable {
 
-    private final String jwtToken;
+    private final String tokenType = "Bearer";
+    private String accessToken;
+
 
 }

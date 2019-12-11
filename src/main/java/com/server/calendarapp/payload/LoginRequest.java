@@ -1,10 +1,11 @@
-package com.server.calendarapp.model;
+package com.server.calendarapp.payload;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 
 
@@ -12,8 +13,10 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Getter
 @Setter
-public class JWTRequest implements Serializable {
+public class LoginRequest implements Serializable {
 
-    private String username;
+    @NotBlank
+    private String email;
+    @NotBlank
     private String password;
 }

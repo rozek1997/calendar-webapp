@@ -3,7 +3,7 @@ package com.server.calendarapp.config;
 
 import com.server.calendarapp.model.CustomUserDetailService;
 import com.server.calendarapp.security.JWTAuthEntryPoint;
-import com.server.calendarapp.security.JWTRequestFilter;
+import com.server.calendarapp.security.JWTAuthFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -33,14 +33,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private CustomUserDetailService customUserDetailService;
 
     @Autowired
-    private JWTRequestFilter jwtRequestFilter;
+    private JWTAuthFilter jwtAuthFilter;
 
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 
-        auth.userDetailsService(customUserDetailService).passwordEncoder(passwordEncoder());
-
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth
+                .userDetailsService(customUserDetailService)
+                .passwordEncoder(passwordEncoder());
     }
+
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -58,16 +60,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity httpSecurity) throws Exception {
 
         httpSecurity
-                .csrf().disable()
-                .authorizeRequests().antMatchers("/authenticate", "/user").permitAll()
-                .anyRequest().authenticated().and()
-                .exceptionHandling().authenticationEntryPoint(jwtAuthEntryPoint).and().sessionManagement()
+                .csrf()
+                .disable()
+                .exceptionHandling()
+                .authenticationEntryPoint(jwtAuthEntryPoint)
+                .and()
+                .sessionManagement()
                 // make sure we use stateless session; session won't be used to
                 // store user's state.
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .authorizeRequests()
+                .antMatchers("/api/auth/*").permitAll()
+                .anyRequest()
+                .authenticated();
+
 
         // Add a filter to validate the tokens with every request
-        httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+        httpSecurity.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
     }
 

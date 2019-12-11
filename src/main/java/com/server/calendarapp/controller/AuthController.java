@@ -2,20 +2,21 @@ package com.server.calendarapp.controller;
 
 
 import com.server.calendarapp.model.CustomUserDetailService;
-import com.server.calendarapp.model.JWTRequest;
-import com.server.calendarapp.model.JWTResponse;
+import com.server.calendarapp.payload.JWTResponse;
+import com.server.calendarapp.payload.LoginRequest;
 import com.server.calendarapp.security.JWTTokenGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
-@RequestMapping("auth")
+@RequestMapping("/api/auth")
 @CrossOrigin
 public class AuthController {
 
@@ -31,28 +32,21 @@ public class AuthController {
         this.customUserDetailService = customUserDetailService;
     }
 
-    @PostMapping("signin")
-    public ResponseEntity<?> signIn(@RequestBody JWTRequest authRequest) throws Exception {
+    @PostMapping("/signin")
+    public ResponseEntity<?> signIn(@Valid @RequestBody LoginRequest loginRequest) {
 
-        authenticate(authRequest.getUsername(), authRequest.getPassword());
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        loginRequest.getEmail(),
+                        loginRequest.getPassword()
+                )
+        );
 
+        SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        final UserDetails userDetails = customUserDetailService.loadUserByUsername(authRequest.getUsername());
-
-        final String token = jwtTokenGenerator.generateToken(userDetails);
-
-
-        return ResponseEntity.ok(new JWTResponse(token));
+        String jwt = jwtTokenGenerator.generateToken(authentication);
+        return ResponseEntity.ok(new JWTResponse(jwt));
     }
 
 
-    private void authenticate(String username, String password) throws Exception {
-        try {
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
-        } catch (DisabledException e) {
-            throw new Exception("USER_DISABLED", e);
-        } catch (BadCredentialsException e) {
-            throw new Exception("INVALID_CREDENTIALS", e);
-        }
-    }
 }

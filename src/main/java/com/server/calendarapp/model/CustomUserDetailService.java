@@ -1,8 +1,8 @@
 package com.server.calendarapp.model;
 
-import com.server.calendarapp.pojo.User;
-import com.server.calendarapp.pojo.UserPrinciple;
-import com.server.calendarapp.repository.UserRepository;
+import com.server.calendarapp.pojo.Customer;
+import com.server.calendarapp.repository.CustomerRepository;
+import com.server.calendarapp.security.CustomerPrinciple;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -13,11 +13,11 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class CustomUserDetailService implements UserDetailsService {
 
-    private UserRepository userRepository;
+    private CustomerRepository customerRepository;
 
     @Autowired
-    public CustomUserDetailService(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public CustomUserDetailService(CustomerRepository customerRepository) {
+        this.customerRepository = customerRepository;
     }
 
     @Override
@@ -25,9 +25,20 @@ public class CustomUserDetailService implements UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
 
-        User user = userRepository.findUserByEmail(email)
+        Customer customer = customerRepository.findUserByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("user not found with email" + email));
 
-        return UserPrinciple.build(user);
+        return CustomerPrinciple.build(customer);
+    }
+
+
+    @Transactional
+    public UserDetails loadUserById(String id) throws UsernameNotFoundException {
+
+
+        Customer customer = customerRepository.findByUserID(id)
+                .orElseThrow(() -> new UsernameNotFoundException("user not found with id" + id));
+
+        return CustomerPrinciple.build(customer);
     }
 }
