@@ -1,6 +1,6 @@
 package com.server.calendarapp.security;
 
-import com.server.calendarapp.model.CustomUserDetailService;
+import com.server.calendarapp.service.CustomUserDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;

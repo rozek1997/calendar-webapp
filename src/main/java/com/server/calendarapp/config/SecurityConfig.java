@@ -1,9 +1,9 @@
 package com.server.calendarapp.config;
 
 
-import com.server.calendarapp.model.CustomUserDetailService;
 import com.server.calendarapp.security.JWTAuthEntryPoint;
 import com.server.calendarapp.security.JWTAuthFilter;
+import com.server.calendarapp.service.CustomUserDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

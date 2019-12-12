@@ -13,6 +13,7 @@ public class CustomerPrinciple implements UserDetails {
 
     private String userID;
     private String username;
+    @JsonIgnore
     private String email;
     @JsonIgnore
     private String password;

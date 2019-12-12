@@ -1,4 +1,4 @@
-package com.server.calendarapp.model;
+package com.server.calendarapp.service;
 
 import com.server.calendarapp.pojo.Customer;
 import com.server.calendarapp.repository.CustomerRepository;
