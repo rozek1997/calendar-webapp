@@ -1,9 +1,20 @@
 package com.server.calendarapp.payload;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.Accessors;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+@Accessors(chain = true)
 public class SignUpRequest {
 
     @NotBlank

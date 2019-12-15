@@ -1,12 +1,12 @@
-package com.server.calendarapp.controller;
+package com.server.calendarapp.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.NOT_FOUND)
-public class RosourceNotFound extends RuntimeException {
+public class ResourceNotFound extends RuntimeException {
 
-    public RosourceNotFound(String message) {
+    public ResourceNotFound(String message) {
         super(message);
     }
 }

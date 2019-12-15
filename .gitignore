@@ -37,4 +37,3 @@ build/
 !.elasticbeanstalk/*.global.yml
 
 
-src/main/resources/application.properties

@@ -18,7 +18,6 @@ public class Customer {
     private String username;
     private String email;
     private String password;
-    private String googleAccount;
 
 
     @Id
@@ -28,8 +27,9 @@ public class Customer {
         return userID;
     }
 
-    public void setUserID(String userID) {
+    public Customer setUserID(String userID) {
         this.userID = userID;
+        return this;
     }
 
     @DynamoDBAttribute(attributeName = "username")
@@ -37,8 +37,9 @@ public class Customer {
         return username;
     }
 
-    public void setUsername(String username) {
+    public Customer setUsername(String username) {
         this.username = username;
+        return this;
     }
 
     @DynamoDBAttribute(attributeName = "email")
@@ -46,8 +47,9 @@ public class Customer {
         return email;
     }
 
-    public void setEmail(String email) {
+    public Customer setEmail(String email) {
         this.email = email;
+        return this;
     }
 
     @DynamoDBAttribute(attributeName = "password")
@@ -55,16 +57,9 @@ public class Customer {
         return password;
     }
 
-    public void setPassword(String password) {
+    public Customer setPassword(String password) {
         this.password = password;
+        return this;
     }
 
-    @DynamoDBAttribute(attributeName = "googleAccount")
-    public String getGoogleAccount() {
-        return googleAccount;
-    }
-
-    public void setGoogleAccount(String googleAccount) {
-        this.googleAccount = googleAccount;
-    }
 }
