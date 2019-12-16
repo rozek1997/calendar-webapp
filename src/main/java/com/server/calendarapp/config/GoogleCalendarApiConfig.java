@@ -29,7 +29,7 @@ import java.util.List;
 public class GoogleCalendarApiConfig {
 
     private static final List<String> SCOPES = Collections.singletonList(CalendarScopes.CALENDAR);
-    private final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
+
     @Value("${google.credentials.file}")
     private String googleCredentialFile;
     @Value("${google.responseType}")
@@ -43,6 +43,12 @@ public class GoogleCalendarApiConfig {
         this.googleCalendarDataStoreFactory = googleCalendarDataStoreFactory;
     }
 
+
+    @Bean
+    public JsonFactory jsonFactory() {
+        return JacksonFactory.getDefaultInstance();
+    }
+
     //
     @Bean
     public NetHttpTransport getGoogleNetHttpTransport() throws GeneralSecurityException, IOException {
@@ -52,7 +58,7 @@ public class GoogleCalendarApiConfig {
     @Bean(name = "myFlow")
     public GoogleAuthorizationCodeFlow getFlow() throws IOException, GeneralSecurityException {
 
-        return new GoogleAuthorizationCodeFlow.Builder(getGoogleNetHttpTransport(), JSON_FACTORY, loadSecrets(), SCOPES)
+        return new GoogleAuthorizationCodeFlow.Builder(getGoogleNetHttpTransport(), jsonFactory(), loadSecrets(), SCOPES)
                 .setDataStoreFactory(googleCalendarDataStoreFactory)
                 .setAccessType("offline")
                 .build();
@@ -75,7 +81,7 @@ public class GoogleCalendarApiConfig {
             throw new FileNotFoundException("Resource not found: " + googleCredentialFile);
         }
 
-        return GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
+        return GoogleClientSecrets.load(jsonFactory(), new InputStreamReader(in));
     }
 
 }
