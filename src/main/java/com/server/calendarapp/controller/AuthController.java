@@ -22,7 +22,7 @@ import java.net.URI;
 
 @RestController
 @RequestMapping("/api/auth")
-@CrossOrigin
+@CrossOrigin(origins = "*")
 public class AuthController {
 
     private AuthenticationManager authenticationManager;

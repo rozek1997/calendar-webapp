@@ -13,6 +13,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import javax.validation.Valid;
 import java.net.URI;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/calendarevents")
 public class CalendarEventController {
