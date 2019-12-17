@@ -7,6 +7,7 @@ import com.server.calendarapp.service.CustomUserDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -17,8 +18,13 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
@@ -86,13 +92,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public WebMvcConfigurer corsConfigurationSource() {
+    public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry
                         .addMapping("/**")
-                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD", "PATCH")
                         .allowedOrigins("*")
                         .allowedHeaders("*");
             }
@@ -100,7 +106,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         };
     }
 
-
+    @Bean
+    CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.addAllowedOrigin("*");
+        configuration.setAllowCredentials(true);
+        configuration.addAllowedMethod(HttpMethod.GET);
+        configuration.addAllowedMethod(HttpMethod.POST);
+        configuration.addAllowedMethod(HttpMethod.PUT);
+        configuration.addAllowedMethod(HttpMethod.DELETE);
+        configuration.addAllowedMethod(HttpMethod.OPTIONS);
+        configuration.addAllowedMethod(HttpMethod.HEAD);
+        configuration.addAllowedMethod(HttpMethod.PATCH);
+        configuration.setAllowedHeaders(Arrays.asList("Access-Control-Allow-Headers", "Access-Control-Allow-Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers", "Origin", "Cache-Control", "Content-Type", "Authorization"));
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+    }
 
 
 }
