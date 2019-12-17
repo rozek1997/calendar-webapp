@@ -3,6 +3,8 @@ package com.server.calendarapp.controller;
 import com.google.api.client.auth.oauth2.AuthorizationCodeRequestUrl;
 import com.google.api.client.auth.oauth2.TokenResponse;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
+import com.server.calendarapp.security.CurrentUser;
+import com.server.calendarapp.security.CustomerPrinciple;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -38,14 +40,14 @@ public class GoogleAuthController {
 
 
     @PostMapping("/login/callback")
-    public void googleLoginCallback(@RequestParam(value = "code") String code) {
+    public void googleLoginCallback(@RequestParam(value = "code") String code, @CurrentUser CustomerPrinciple currentUser) {
 
         try {
             TokenResponse response = googleAuthorizationCodeFlow
                     .newTokenRequest(code)
                     .setRedirectUri(redirectURI)
                     .execute();
-            googleAuthorizationCodeFlow.createAndStoreCredential(response, "userID");
+            googleAuthorizationCodeFlow.createAndStoreCredential(response, currentUser.getUserID());
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println(e.getMessage());
