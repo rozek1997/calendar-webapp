@@ -8,6 +8,7 @@ import com.server.calendarapp.security.CustomerPrinciple;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
@@ -40,8 +41,9 @@ public class GoogleAuthController {
 
 
     @PostMapping("/login/callback")
-    public void googleLoginCallback(@RequestParam(value = "code") String code, @CurrentUser CustomerPrinciple currentUser) {
+    public ResponseEntity<?> googleLoginCallback(@RequestParam(value = "code") String code, @CurrentUser CustomerPrinciple currentUser, HttpServletResponse responseServlet) {
 
+        System.out.println(code);
         try {
             TokenResponse response = googleAuthorizationCodeFlow
                     .newTokenRequest(code)
@@ -51,8 +53,10 @@ public class GoogleAuthController {
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println(e.getMessage());
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
 
+        return ResponseEntity.ok().build();
     }
 
 
