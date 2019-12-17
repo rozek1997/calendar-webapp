@@ -36,12 +36,13 @@ public class GoogleAuthController {
 
     @GetMapping("/login")
     public void googleLogin(HttpServletResponse response) throws IOException {
-        response.sendRedirect(googleAuthorizationCodeRequestUrl.build());
+        System.out.println(googleAuthorizationCodeRequestUrl.build());
+//        response.sendRedirect(googleAuthorizationCodeRequestUrl.build());
     }
 
 
     @PostMapping("/login/callback")
-    public ResponseEntity<?> googleLoginCallback(@RequestParam(value = "code") String code, @CurrentUser CustomerPrinciple currentUser, HttpServletResponse responseServlet) {
+    public ResponseEntity<?> googleLoginCallback(@RequestParam(value = "code") String code, @CurrentUser CustomerPrinciple currentUser) {
 
         System.out.println(code);
         try {
