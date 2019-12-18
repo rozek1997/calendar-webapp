@@ -41,7 +41,6 @@ public class GoogleAuthController {
 //
 //    }
 
-
     @PostMapping("/login/callback")
     public ResponseEntity<?> googleLoginCallback(@RequestParam(value = "code") String code, @CurrentUser CustomerPrinciple currentUser) {
 
@@ -51,6 +50,7 @@ public class GoogleAuthController {
                     .execute();
             googleAuthorizationCodeFlow.createAndStoreCredential(response, currentUser.getUserID());
         } catch (Exception e) {
+            e.printStackTrace();
             System.out.println(e.getMessage());
         }
 
