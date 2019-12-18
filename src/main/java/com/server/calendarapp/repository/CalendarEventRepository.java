@@ -14,4 +14,7 @@ public interface CalendarEventRepository extends CrudRepository<CalendarEvent, S
 
     Optional<List<CalendarEvent>> findByUserID(String userID);
 
+    Boolean existsByEventID(String eventID);
+
+
 }

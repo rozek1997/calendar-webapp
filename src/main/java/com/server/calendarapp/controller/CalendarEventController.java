@@ -2,7 +2,7 @@ package com.server.calendarapp.controller;
 
 import com.server.calendarapp.exception.EventsNotFoundException;
 import com.server.calendarapp.payload.request.CalendarEventRequest;
-import com.server.calendarapp.pojo.dbo.CalendarEvent;
+import com.server.calendarapp.payload.response.ApiResponse;
 import com.server.calendarapp.security.CurrentUser;
 import com.server.calendarapp.security.CustomerPrinciple;
 import com.server.calendarapp.service.CalendarEventFacade;
@@ -35,11 +35,9 @@ public class CalendarEventController {
     public ResponseEntity<?> createEvent(@Valid @RequestBody CalendarEventRequest calendarEventRequest
             , @CurrentUser CustomerPrinciple currentUser) {
 
-
-        System.out.println(calendarEventRequest.getEventID());
-        CalendarEvent event = calendarEventFacade.createEvent(calendarEventRequest, currentUser.getUserID());
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest().buildAndExpand(event.getEventID()).toUri();
-        return ResponseEntity.created(location).build();
+        ApiResponse apiResponse = calendarEventFacade.createEvent(calendarEventRequest, currentUser.getUserID());
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().buildAndExpand().toUri();
+        return ResponseEntity.created(location).body(apiResponse);
 
     }
 
@@ -47,8 +45,8 @@ public class CalendarEventController {
     public ResponseEntity<?> updateEvent(@Valid @RequestBody CalendarEventRequest calendarEventRequest
             , @CurrentUser CustomerPrinciple currentUser) throws IOException {
 
-        CalendarEvent event = calendarEventFacade.updateEvent(calendarEventRequest, currentUser.getUserID());
-        return ResponseEntity.ok().build();
+        ApiResponse apiResponse = calendarEventFacade.updateEvent(calendarEventRequest, currentUser.getUserID());
+        return ResponseEntity.ok().body(apiResponse);
 
     }
 
@@ -57,8 +55,8 @@ public class CalendarEventController {
                                          @CurrentUser CustomerPrinciple currentUser) {
 
 
-        calendarEventFacade.deleteEvent(eventID, currentUser.getUserID());
-        return ResponseEntity.ok().build();
+        ApiResponse apiResponse = calendarEventFacade.deleteEvent(eventID, currentUser.getUserID());
+        return ResponseEntity.ok().body(apiResponse);
 
     }
 }

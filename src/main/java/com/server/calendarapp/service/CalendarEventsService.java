@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 
 @Service
 public class CalendarEventsService {
@@ -39,16 +38,20 @@ public class CalendarEventsService {
         return calendarEventRepository.save(calendarEvent);
     }
 
-    public CalendarEvent updateEvent(CalendarEventRequest event, String userID) {
+    public CalendarEvent updateEvent(CalendarEventRequest event, String userID) throws EventsNotFoundException {
         CalendarEvent calendarEvent = CalendarEventMapper.mapRequestToCalendarEvent(event, userID);
+        if (!calendarEventRepository.existsByEventID(calendarEvent.getEventID()))
+            throw new EventsNotFoundException("Event not found " + calendarEvent.getEventID());
         return calendarEventRepository.save(calendarEvent);
     }
 
 
-    public CompletableFuture<Void> deleteEvent(String eventID) {
+    public void deleteEvent(String eventID) throws EventsNotFoundException {
+
+        if (!calendarEventRepository.existsByEventID(eventID))
+            throw new EventsNotFoundException("Event not found " + eventID);
         calendarEventRepository.deleteById(eventID);
 
-        return CompletableFuture.completedFuture(null);
     }
 
 }

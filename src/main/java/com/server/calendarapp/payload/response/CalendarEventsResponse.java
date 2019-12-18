@@ -15,6 +15,7 @@ import java.util.Set;
 @NoArgsConstructor
 public class CalendarEventsResponse {
 
+    private ApiResponse apiResponse;
     private Timestamp createdAt;
     private Set<EventDTO> calendarEventList;
 
