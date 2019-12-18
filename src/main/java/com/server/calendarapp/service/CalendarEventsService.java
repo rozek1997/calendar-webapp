@@ -46,7 +46,7 @@ public class CalendarEventsService {
 
 
     public CompletableFuture<Void> deleteEvent(String eventID) {
-        calendarEventRepository.deleteById(Integer.parseInt(eventID));
+        calendarEventRepository.deleteById(eventID);
 
         return CompletableFuture.completedFuture(null);
     }
