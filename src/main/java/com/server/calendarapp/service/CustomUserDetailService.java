@@ -1,8 +1,8 @@
 package com.server.calendarapp.service;
 
 import com.server.calendarapp.exception.BadRequestException;
-import com.server.calendarapp.payload.SignUpRequest;
-import com.server.calendarapp.pojo.Customer;
+import com.server.calendarapp.payload.request.SignUpRequest;
+import com.server.calendarapp.pojo.dbo.Customer;
 import com.server.calendarapp.pojo.mapper.CustomerMapper;
 import com.server.calendarapp.repository.CustomerRepository;
 import com.server.calendarapp.security.CustomerPrinciple;

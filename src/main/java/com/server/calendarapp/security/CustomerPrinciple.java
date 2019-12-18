@@ -2,7 +2,7 @@ package com.server.calendarapp.security;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.server.calendarapp.pojo.Customer;
+import com.server.calendarapp.pojo.dbo.Customer;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 

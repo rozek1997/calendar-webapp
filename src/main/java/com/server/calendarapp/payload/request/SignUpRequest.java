@@ -1,4 +1,4 @@
-package com.server.calendarapp.payload;
+package com.server.calendarapp.payload.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

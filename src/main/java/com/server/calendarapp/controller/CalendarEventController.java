@@ -1,33 +1,34 @@
 package com.server.calendarapp.controller;
 
-import com.server.calendarapp.payload.CalendarEventRequest;
-import com.server.calendarapp.pojo.CalendarEvent;
+import com.server.calendarapp.exception.EventsNotFoundException;
+import com.server.calendarapp.payload.request.CalendarEventRequest;
+import com.server.calendarapp.pojo.dbo.CalendarEvent;
 import com.server.calendarapp.security.CurrentUser;
 import com.server.calendarapp.security.CustomerPrinciple;
-import com.server.calendarapp.service.CalendarEventsService;
+import com.server.calendarapp.service.CalendarEventFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.net.URI;
 
 @RestController
 @RequestMapping("/api/calendarevents")
 public class CalendarEventController {
 
-    private CalendarEventsService calendarEventsService;
+    private CalendarEventFacade calendarEventFacade;
 
     @Autowired
-    public CalendarEventController(CalendarEventsService calendarEventsService) {
-        this.calendarEventsService = calendarEventsService;
+    public CalendarEventController(CalendarEventFacade calendarEventFacade) {
+        this.calendarEventFacade = calendarEventFacade;
     }
 
     @GetMapping
-    public ResponseEntity<?> getAllUsersEvent(@CurrentUser CustomerPrinciple currentUser) {
-        System.out.println(currentUser.getEmail());
-        return ResponseEntity.ok(calendarEventsService.getAllEvents(currentUser.getUserID()));
+    public ResponseEntity<?> getAllUsersEvent(@CurrentUser CustomerPrinciple currentUser) throws EventsNotFoundException {
+        return ResponseEntity.ok(calendarEventFacade.getAllEvents(currentUser.getUserID()));
     }
 
     @PostMapping("createEvent")
@@ -36,7 +37,7 @@ public class CalendarEventController {
 
 
         System.out.println(calendarEventRequest.getEventID());
-        CalendarEvent event = calendarEventsService.createEvent(calendarEventRequest, currentUser.getUserID());
+        CalendarEvent event = calendarEventFacade.createEvent(calendarEventRequest, currentUser.getUserID());
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().buildAndExpand(event.getEventID()).toUri();
         return ResponseEntity.created(location).build();
 
@@ -44,19 +45,19 @@ public class CalendarEventController {
 
     @PutMapping("updateEvent")
     public ResponseEntity<?> updateEvent(@Valid @RequestBody CalendarEventRequest calendarEventRequest
-            , @CurrentUser CustomerPrinciple currentUser) {
+            , @CurrentUser CustomerPrinciple currentUser) throws IOException {
 
-
-        CalendarEvent event = calendarEventsService.updateEvent(calendarEventRequest, currentUser.getUserID());
+        CalendarEvent event = calendarEventFacade.updateEvent(calendarEventRequest, currentUser.getUserID());
         return ResponseEntity.ok().build();
 
     }
 
-    @DeleteMapping("deleteEvent/{eventID}")
-    public ResponseEntity<?> updateEvent(@PathVariable("eventID") String eventID) {
+    @DeleteMapping("deleteEvent")
+    public ResponseEntity<?> updateEvent(@RequestParam(value = "eventID", required = true) String eventID,
+                                         @CurrentUser CustomerPrinciple currentUser) {
 
 
-        calendarEventsService.deleteEvent(eventID);
+        calendarEventFacade.deleteEvent(eventID, currentUser.getUserID());
         return ResponseEntity.ok().build();
 
     }

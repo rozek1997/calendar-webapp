@@ -1,7 +1,7 @@
 package com.server.calendarapp.pojo.mapper;
 
-import com.server.calendarapp.payload.SignUpRequest;
-import com.server.calendarapp.pojo.Customer;
+import com.server.calendarapp.payload.request.SignUpRequest;
+import com.server.calendarapp.pojo.dbo.Customer;
 
 public class CustomerMapper {
 

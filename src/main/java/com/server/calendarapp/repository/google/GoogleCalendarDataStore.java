@@ -4,7 +4,7 @@ import com.google.api.client.auth.oauth2.StoredCredential;
 import com.google.api.client.util.store.AbstractDataStore;
 import com.google.api.client.util.store.DataStore;
 import com.google.api.client.util.store.DataStoreFactory;
-import com.server.calendarapp.pojo.GoogleCredential;
+import com.server.calendarapp.pojo.dbo.GoogleCredential;
 import com.server.calendarapp.repository.GoogleCredentialRepository;
 
 import java.io.IOException;

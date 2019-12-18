@@ -1,4 +1,4 @@
-package com.server.calendarapp.pojo;
+package com.server.calendarapp.pojo.dbo;
 
 
 import com.amazonaws.services.dynamodbv2.datamodeling.*;

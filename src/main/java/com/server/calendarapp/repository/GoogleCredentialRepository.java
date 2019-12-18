@@ -1,6 +1,6 @@
 package com.server.calendarapp.repository;
 
-import com.server.calendarapp.pojo.GoogleCredential;
+import com.server.calendarapp.pojo.dbo.GoogleCredential;
 import org.socialsignin.spring.data.dynamodb.repository.EnableScan;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;

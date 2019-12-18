@@ -1,17 +1,15 @@
 package com.server.calendarapp.service;
 
-import com.amazonaws.services.dynamodbv2.model.ResourceNotFoundException;
-import com.server.calendarapp.payload.CalendarEventRequest;
-import com.server.calendarapp.payload.CalendarEventsResponse;
-import com.server.calendarapp.pojo.CalendarEvent;
+import com.server.calendarapp.exception.EventsNotFoundException;
+import com.server.calendarapp.payload.request.CalendarEventRequest;
+import com.server.calendarapp.pojo.dbo.CalendarEvent;
 import com.server.calendarapp.pojo.mapper.CalendarEventMapper;
 import com.server.calendarapp.repository.CalendarEventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
-import java.util.Date;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 @Service
 public class CalendarEventsService {
@@ -25,15 +23,13 @@ public class CalendarEventsService {
     }
 
 
-    public CalendarEventsResponse getAllEvents(String userID) {
+    public List<CalendarEvent> getAllEvents(String userID) throws EventsNotFoundException {
 
         List<CalendarEvent> calendarEventList = calendarEventRepository
                 .findByUserID(userID)
-                .orElseThrow(() -> new ResourceNotFoundException("Cant find events for user" + userID));
+                .orElseThrow(() -> new EventsNotFoundException("Cant find events for user" + userID));
 
-
-        return new CalendarEventsResponse(new Timestamp(new Date().getTime()), calendarEventList);
-
+        return calendarEventList;
     }
 
 
@@ -49,8 +45,10 @@ public class CalendarEventsService {
     }
 
 
-    public void deleteEvent(String eventID) {
-        calendarEventRepository.deleteById(eventID);
+    public CompletableFuture<Void> deleteEvent(String eventID) {
+        calendarEventRepository.deleteById(Integer.parseInt(eventID));
+
+        return CompletableFuture.completedFuture(null);
     }
 
 }

@@ -1,10 +1,10 @@
 package com.server.calendarapp.controller;
 
 
-import com.server.calendarapp.payload.JWTResponse;
-import com.server.calendarapp.payload.LoginRequest;
-import com.server.calendarapp.payload.SignUpRequest;
-import com.server.calendarapp.pojo.Customer;
+import com.server.calendarapp.payload.request.LoginRequest;
+import com.server.calendarapp.payload.request.SignUpRequest;
+import com.server.calendarapp.payload.response.JWTResponse;
+import com.server.calendarapp.pojo.dbo.Customer;
 import com.server.calendarapp.security.JWTTokenGenerator;
 import com.server.calendarapp.service.CustomUserDetailService;
 import org.springframework.beans.factory.annotation.Autowired;

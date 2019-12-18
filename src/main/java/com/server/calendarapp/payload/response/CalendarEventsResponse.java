@@ -1,13 +1,13 @@
-package com.server.calendarapp.payload;
+package com.server.calendarapp.payload.response;
 
-import com.server.calendarapp.pojo.CalendarEvent;
+import com.server.calendarapp.pojo.dto.EventDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.sql.Timestamp;
-import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -16,7 +16,7 @@ import java.util.List;
 public class CalendarEventsResponse {
 
     private Timestamp createdAt;
-    private List<CalendarEvent> calendarEventList;
+    private Set<EventDTO> calendarEventList;
 
 
 }
