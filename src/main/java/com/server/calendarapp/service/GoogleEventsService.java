@@ -117,7 +117,7 @@ public class GoogleEventsService {
         Calendar service = buildCalendar(userID);
         Event event = eventExist(service, eventID);
 
-        service.events().delete("primary", event.getId()).execute();
+        service.events().delete("primary", eventID).execute();
 
 
         return true;

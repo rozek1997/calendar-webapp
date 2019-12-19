@@ -1,8 +1,6 @@
 package com.server.calendarapp.exception;
 
-import java.io.IOException;
-
-public class EventsNotFoundException extends IOException {
+public class EventsNotFoundException extends Exception {
 
     public EventsNotFoundException(String message) {
         super(message);

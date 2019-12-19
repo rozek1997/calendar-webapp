@@ -25,12 +25,21 @@ public class CalendarEventController {
         this.calendarEventFacade = calendarEventFacade;
     }
 
+    /**
+     * @param currentUser autheticated via spring security
+     * @return ResponseEntity with http status
+     */
     @GetMapping
     public ResponseEntity<?> getAllUsersEvent(@CurrentUser CustomerPrinciple currentUser) {
         CalendarEventsResponse response = calendarEventFacade.getAllEvents(currentUser.getUserID());
         return new ResponseEntity(response, response.getApiResponse().getHttpStatus());
     }
 
+    /**
+     * @param calendarEventRequest
+     * @param currentUser          authenticated via spring security
+     * @return
+     */
     @PostMapping("createEvent")
     public ResponseEntity<?> createEvent(@Valid @RequestBody CalendarEventRequest calendarEventRequest
             , @CurrentUser CustomerPrinciple currentUser) {
@@ -39,6 +48,12 @@ public class CalendarEventController {
         return mapStatus(apiResponse);
     }
 
+    /**
+     * @param calendarEventRequest
+     * @param currentUser
+     * @return
+     * @throws IOException
+     */
     @PutMapping("updateEvent")
     public ResponseEntity<?> updateEvent(@Valid @RequestBody CalendarEventRequest calendarEventRequest
             , @CurrentUser CustomerPrinciple currentUser) throws IOException {
@@ -48,6 +63,11 @@ public class CalendarEventController {
 
     }
 
+    /**
+     * @param eventID
+     * @param currentUser
+     * @return
+     */
     @DeleteMapping("deleteEvent")
     public ResponseEntity<?> deleteEvent(@RequestParam(value = "eventID", required = true) String eventID,
                                          @CurrentUser CustomerPrinciple currentUser) {

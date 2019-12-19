@@ -40,7 +40,8 @@ public class CalendarEventsService {
 
     public CalendarEvent updateEvent(CalendarEventRequest event, String userID) throws EventsNotFoundException {
         CalendarEvent calendarEvent = CalendarEventMapper.mapRequestToCalendarEvent(event, userID);
-        if (!calendarEventRepository.existsByEventID(calendarEvent.getEventID()))
+        CalendarEvent returnEvent = calendarEventRepository.findByEventID(calendarEvent.getEventID());
+        if (returnEvent == null)
             throw new EventsNotFoundException("Event not found " + calendarEvent.getEventID());
         return calendarEventRepository.save(calendarEvent);
     }
@@ -48,8 +49,10 @@ public class CalendarEventsService {
 
     public void deleteEvent(String eventID) throws EventsNotFoundException {
 
-        if (!calendarEventRepository.existsByEventID(eventID))
+        CalendarEvent event = calendarEventRepository.findByEventID(eventID);
+        if (event == null) {
             throw new EventsNotFoundException("Event not found " + eventID);
+        }
         calendarEventRepository.deleteById(eventID);
 
     }

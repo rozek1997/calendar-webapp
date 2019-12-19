@@ -6,8 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
-
 @Service
 public class CalendarEventDeleteFacade {
 
@@ -44,7 +42,7 @@ public class CalendarEventDeleteFacade {
     private void deleteGoogleEvent(ApiResponse apiResponse, String userID, String eventID) {
         try {
             googleEventsService.deleteEvent(eventID, userID);
-        } catch (IOException e) {
+        } catch (Exception e) {
             UpdateResponse.updateResponse(apiResponse, HttpStatus.NOT_FOUND, e);
         }
 
