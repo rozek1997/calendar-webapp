@@ -86,6 +86,7 @@ public class GoogleEventsService {
         Event event = eventExist(service, calendarEvent.getEventID());
 
         event
+                .setId(calendarEvent.getEventID())
                 .setSummary(calendarEvent.getEventName())
                 .setDescription(calendarEvent.getDescription());
 
