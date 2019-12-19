@@ -8,6 +8,7 @@ import com.google.api.client.util.DateTime;
 import com.google.api.services.calendar.Calendar;
 import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.EventDateTime;
+import com.server.calendarapp.payload.request.CalendarEventRequest;
 import com.server.calendarapp.pojo.dbo.CalendarEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -79,7 +80,7 @@ public class GoogleEventsService {
     }
 
 
-    public Event updateEvent(CalendarEvent calendarEvent, String userID) throws IOException {
+    public Event updateEvent(CalendarEventRequest calendarEvent, String userID) throws IOException {
 
         Calendar service = buildCalendar(userID);
 
@@ -106,7 +107,7 @@ public class GoogleEventsService {
         event.setEnd(end);
 
 
-        Event updateEvent = service.events().update("primary", event.getId(), event).execute();
+        Event updateEvent = service.events().update("primary", calendarEvent.getEventID(), event).execute();
 
         return updateEvent;
 

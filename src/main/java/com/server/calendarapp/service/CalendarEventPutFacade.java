@@ -29,7 +29,7 @@ public class CalendarEventPutFacade {
 
         CalendarEvent calendarEvent = null;
         calendarEvent = updateCustomEvent(apiResponse, userID, event);
-        updateGoogleEvent(apiResponse, userID, calendarEvent);
+        updateGoogleEvent(apiResponse, userID, event);
 
         return apiResponse;
     }
@@ -49,7 +49,7 @@ public class CalendarEventPutFacade {
 
     }
 
-    private Event updateGoogleEvent(ApiResponse apiResponse, String userID, CalendarEvent calendarEvent) {
+    private Event updateGoogleEvent(ApiResponse apiResponse, String userID, CalendarEventRequest calendarEvent) {
         Event event = new Event();
         try {
             event = googleEventsService.updateEvent(calendarEvent, userID);
