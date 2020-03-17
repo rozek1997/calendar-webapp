@@ -25,4 +25,34 @@ Calendar application to organize meetings and schedule your plan. Application al
 ### `mvn clean -D package spring-boot:run`
 
 Runs the app in the development mode.<br />
-Open [http://localhost:5000](http://localhost:5000) to view it in the browser.
+API is available under address [http://localhost:5000](http://localhost:5000)
+
+## Response 
+
+Application returns Events from calendar in JSON format. Time of events is returned in unix timestamp string.
+
+## Authorization
+
+All API requests require the use of a generated token. <br>
+You can generate API key, by navigating to the /api/auth endpoint. 
+
+The token need to be added for each request to each endpoint 
+except /api/auth endpoint. <br>
+
+Token need to be placed in header of the request as follow:
+Authorization: "Bearer <TOKEN_VALUE>"
+
+
+## Response Status Codes
+
+Calendar App returns the following status codes in its API:
+
+| Status Code | Description |
+| :--- | :--- |
+| 200 | `OK` |
+| 201 | `CREATED` |
+| 206 | `PARTIAL_CONTENT` |
+| 400 | `BAD REQUEST` |
+| 401 | `UNAUTHORIZED` |
+| 404 | `NOT FOUND` |
+| 500 | `INTERNAL SERVER ERROR` |
