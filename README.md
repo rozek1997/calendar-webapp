@@ -1,6 +1,5 @@
 # Calendar App
 
-## Overview
 
 Calendar application to organize meetings and schedule your plan. Application allow to synchronize plans with Google Calendar
 
@@ -16,9 +15,13 @@ Calendar application to organize meetings and schedule your plan. Application al
 
 ## Preview
 
-![main-view](https://drive.google.com/uc?export=view&id=1G4gfgM2MDL_yrnQU5N06xPqw0TUpiVZG)
+### Main Page
 
-![login](https://drive.google.com/uc?export=view&id=1ad0Wm5dCQju_ebb1_KP1ea8d36VrIP9u)
+![main_view](https://user-images.githubusercontent.com/38226876/76954013-ec69bd00-690f-11ea-8c21-8b41d28c05c5.png)
+
+### Sign in page
+![signin](https://user-images.githubusercontent.com/38226876/76954015-ed9aea00-690f-11ea-83fb-8409a7f1c43e.png)
+
 
 ## Running 
 
